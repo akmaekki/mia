@@ -14,9 +14,9 @@ class MarketDataClient(object):
             f"{self.base_url}/{url}", headers={'content-type': 'application/json'})
         return response.json()
 
-    @retry(stop=stop_after_attempt(3),
-           before=before_log(logger, logging.DEBUG))
+    @retry(stop=stop_after_attempt(3), before=before_log(logger, logging.DEBUG))
     def all_prices(self):
+        self.logger.info("test")
         return self._make_request("prices")
 
     def price(self, code):
