@@ -1,4 +1,4 @@
-FROM alpine:3.6
+FROM alpine:3.19
 
 MAINTAINER simplebank <engineering@simplebenak.book>
 
@@ -27,7 +27,7 @@ RUN apk update && apk --update add \
       ca-certificates \
       bash
 
-RUN gem install bundler --no-ri --no-rdoc \
+RUN gem install bundler --no-document \
     && cd $app_root$app_name ; bundle install \
     && rm -rf /var/cache/apk/*
 

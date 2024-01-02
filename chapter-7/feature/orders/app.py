@@ -10,8 +10,7 @@ class OrdersService:
     dispatch = EventDispatcher()
 
     accounts = RpcProxy("account_transactions_service")
-    statsd = StatsClient('statsd-agent', 8125,
-                         prefix='simplebank-demo.orders')
+    statsd = StatsClient('statsd-agent', 8125, prefix='simplebank-demo.orders')
 
     @rpc
     @statsd.timer('sell_shares')
@@ -40,8 +39,7 @@ class OrdersService:
     @event_handler("market_service", "order_placed")
     @statsd.timer('place_order')
     def handle_place_order(self, payload):
-        print("[{}] {} received order_placed event ... updating order to placed".format(
-            payload, self.name))
+        print("[{}] {} received order_placed event ... updating order to placed".format(payload, self.name))
 
     @rpc
     @statsd.timer('health')

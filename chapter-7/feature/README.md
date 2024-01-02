@@ -31,3 +31,7 @@ simplebank-statsd-agent | 2018-06-10T12:54:18.165861941Z StatsD Metric: simpleba
 simplebank-statsd-agent | 2018-06-10T12:54:18.166518802Z StatsD Metric: simplebank-demo.orders.sell_shares 80.703471|ms
 simplebank-statsd-agent | 2018-06-10T12:54:18.170951159Z StatsD Metric: simplebank-demo.gateway.sell_shares 88.776036|ms
 ```
+
+
+# Notes Maekki
+Many of the annotations in the Python code files can be found here: https://nameko.readthedocs.io/en/stable/built_in_extensions.html#events-pub-sub and here https://statsd.readthedocs.io/en/latest/timing.html. Actually, the `nameko` framework offers plenty of functionality out of the box.

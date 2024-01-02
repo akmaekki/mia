@@ -11,8 +11,7 @@ class Gateway:
 
     name = "gateway"
     orders = RpcProxy("orders_service")
-    statsd = StatsClient('statsd-agent', 8125,
-                         prefix='simplebank-demo.gateway')
+    statsd = StatsClient('statsd-agent', 8125, prefix='simplebank-demo.gateway')
 
     @http('POST', '/shares/sell')
     @statsd.timer('sell_shares')
@@ -20,9 +19,7 @@ class Gateway:
         req_id = uuid.uuid4()
         res = u"{}".format(req_id)
         req = self.__sell_shares(res)
-        return Response(json.dumps(
-            {"ok": "sell order {} placed".format(req_id)}),
-            mimetype='application/json')
+        return Response(json.dumps( {"ok": "sell order {} placed".format(req_id)}), mimetype='application/json')
 
     @rpc
     def __sell_shares(self, payload):
