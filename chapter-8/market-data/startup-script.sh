@@ -24,13 +24,13 @@ cd /opt/app/chapter-8/market-data
 
 # Install app dependencies
 virtualenv env
-env/bin/pip install -r requirements.txt
+# env/bin/pip install -r requirements.txt
+env/bin/pip install flask gunicorn gevent
 
 # Make sure the app user owns the application code
 chown -R app:app /opt/app
 
-# Configure supervisor to start gunicorn inside of our virtualenv and run the
-# application.
+# Configure supervisor to start gunicorn inside of our virtualenv and run the application.
 cat >/etc/supervisor/conf.d/market-data-app.conf << EOF
 [program:app]
 directory=/opt/app/chapter-8/market-data
@@ -38,8 +38,7 @@ command=/opt/app/chapter-8/market-data/env/bin/gunicorn -c config.py app:app --b
 autostart=true
 autorestart=true
 user=app
-# Environment variables ensure that the application runs inside of the
-# configured virtualenv.
+# Environment variables ensure that the application runs inside of the configured virtualenv.
 environment=VIRTUAL_ENV="/opt/app/env/chapter-8/market-data",PATH="/opt/app/chapter-8/market-data/env/bin",\
     HOME="/home/app",USER="app"
 stdout_logfile=syslog
