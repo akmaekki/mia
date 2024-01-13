@@ -18,7 +18,7 @@ withPod {
 
     container('docker') {
       stage('Build') {
-        sh("docker build -t ${service} .")
+        sh("docker build -f ./chapter-10/market-data/Dockerfile -t ${service} ./chapter-10/market-data")
       }
     }
   }
