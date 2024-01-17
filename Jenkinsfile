@@ -24,8 +24,8 @@ withPod {
       stage('Test') {
         try {
           sh("docker run -v `pwd`:/workspace --rm ${service} python setup.py test")
-          sh("echo "Host:"`hostname`")
-          sh("echo "PWD:"`pwd`")
+          sh("echo Host `hostname`")
+          sh("echo PWD `pwd`")
         } finally {
           step([$class: 'JUnitResultArchiver', testResults: '**/results.xml'])
         }
