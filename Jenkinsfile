@@ -1,5 +1,3 @@
-def deploy = load('deploy.groovy')
-
 def withPod(body) {
   podTemplate(label: 'pod', serviceAccount: 'jenkins', containers: [
       containerTemplate(name: 'docker', image: 'docker', command: 'cat', ttyEnabled: true),
@@ -41,6 +39,7 @@ withPod {
         }
       }
 
+      def deploy = load('deploy.groovy')
       stage('Deploy to staging') {
         deploy.toKubernetes(tagToDeploy, 'staging', 'market-data')
       }
