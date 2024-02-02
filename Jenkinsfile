@@ -1,3 +1,5 @@
+def deploy = load('deploy.groovy')
+
 def withPod(body) {
   podTemplate(label: 'pod', serviceAccount: 'jenkins', containers: [
       containerTemplate(name: 'docker', image: 'docker', command: 'cat', ttyEnabled: true),
@@ -39,26 +41,17 @@ withPod {
         }
       }
 
-      stage('Deploy') {
-        sh("sed -i.bak 's#BUILD_TAG#${tagToDeploy}#' ./chapter-10/deploy/staging/*.yml")
-
-        container('kubectl') {
-          sh("kubectl --namespace=staging apply -f chapter-10/deploy/staging/")
-        }
+      stage('Deploy to staging') {
+        deploy.toKubernetes(tagToDeploy, 'staging', 'market-data')
       }
 
       stage('Approve release?') {
-        input message: "Release ${tagToDeploy} to production?"
+        input "Release ${tagToDeploy} to production?"
       }
 
       stage('Deploy to production') {
-        sh("sed -i.bak 's#BUILD_TAG#${tagToDeploy}#' ./chapter-10/deploy/production/*.yml")
-
-        container('kubectl') {
-          sh("kubectl --namespace=production apply -f chapter-10/deploy/production/")
-        }
+        deploy.toKubernetes(tagToDeploy, 'production', 'market-data')
       }
-
     }
   }
 }
