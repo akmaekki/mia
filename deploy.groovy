@@ -10,8 +10,8 @@ def toKubernetes(tagToDeploy, namespace, deploymentName) {
     kubectl(namespace, "apply -f chapter-10/deploy/${namespace}/")
 }
 
-def rollback(deploymentName) {
-    kubectl("rollout undo deployment/${deploymentName}")
+def rollback(namespace, deploymentName) {
+    kubectl(namespace, "rollout undo deployment/${deploymentName}")
 }
 
 return this;
