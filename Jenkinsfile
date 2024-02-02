@@ -47,6 +47,10 @@ withPod {
         }
       }
 
+      stage('Approve release?') {
+        input message: "Release ${tagToDeploy} to production?"
+      }
+
     }
   }
 }
