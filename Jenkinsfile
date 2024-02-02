@@ -51,6 +51,14 @@ withPod {
         input message: "Release ${tagToDeploy} to production?"
       }
 
+      stage('Deploy to production') {
+        sh("sed -i.bak 's#BUILD_TAG#${tagToDeploy}#' ./chapter-10/deploy/production/*.yml")
+
+        container('kubectl') {
+          sh("kubectl --namespace=production apply -f chapter-10/deploy/production/")
+        }
+      }
+
     }
   }
 }
